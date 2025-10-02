@@ -357,19 +357,66 @@ function search($dir, $searchfor, $folder = '')
 
 	return $result;
 }
-
-// check if file is a md file
+// check if file is a md or pdf file
 function isMDFile($file)
 {
-
 	$fileinfo = pathinfo($file);
 
-
-	if (isset($fileinfo['extension']) and strtolower($fileinfo['extension']) == 'md') {
-		return true;
+	if (isset($fileinfo['extension'])) {
+		$ext = strtolower($fileinfo['extension']);
+		if ($ext == 'md' || $ext == 'pdf') {
+			return true;
+		}
 	}
 
 	return false;
+}
+
+// ALSO MODIFY getFileInfos() function (line 375-397):
+// ORIGINAL:
+function getFileInfos($file)
+{
+	global $rootDir;
+	$mdFile = mb_basename($file);
+	if (strcmp(substr($mdFile, -3), ".md") === 0) {
+		$mdFile = substr($mdFile, 0, -3);
+	}
+
+	$folderClean = str_replace('$' . $rootDir, '', '$' . pathinfo($file)["dirname"]);
+
+	$folderClean = substr($folderClean, 1);
+	if (!strcmp($folderClean, '')) {
+		$pathClean = $mdFile;
+	} else {
+		$pathClean = $folderClean . '/' . $mdFile;
+	}
+
+	return [$pathClean, $mdFile];
+}
+
+// MODIFIED - Replace with this:
+function getFileInfos($file)
+{
+	global $rootDir;
+	$mdFile = mb_basename($file);
+	
+	// Remove extension for both .md and .pdf files
+	if (strcmp(substr($mdFile, -3), ".md") === 0) {
+		$mdFile = substr($mdFile, 0, -3);
+	} elseif (strcmp(substr($mdFile, -4), ".pdf") === 0) {
+		$mdFile = substr($mdFile, 0, -4);
+	}
+
+	$folderClean = str_replace('$' . $rootDir, '', '$' . pathinfo($file)["dirname"]);
+
+	$folderClean = substr($folderClean, 1);
+	if (!strcmp($folderClean, '')) {
+		$pathClean = $mdFile;
+	} else {
+		$pathClean = $folderClean . '/' . $mdFile;
+	}
+
+	return [$pathClean, $mdFile];
 }
 
 function getFileInfos($file)
