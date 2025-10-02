@@ -357,7 +357,7 @@ function search($dir, $searchfor, $folder = '')
 
 	return $result;
 }
-// check if file is a md or pdf file
+
 function isMDFile($file)
 {
 	$fileinfo = pathinfo($file);
@@ -372,29 +372,7 @@ function isMDFile($file)
 	return false;
 }
 
-// ALSO MODIFY getFileInfos() function (line 375-397):
-// ORIGINAL:
-function getFileInfos($file)
-{
-	global $rootDir;
-	$mdFile = mb_basename($file);
-	if (strcmp(substr($mdFile, -3), ".md") === 0) {
-		$mdFile = substr($mdFile, 0, -3);
-	}
 
-	$folderClean = str_replace('$' . $rootDir, '', '$' . pathinfo($file)["dirname"]);
-
-	$folderClean = substr($folderClean, 1);
-	if (!strcmp($folderClean, '')) {
-		$pathClean = $mdFile;
-	} else {
-		$pathClean = $folderClean . '/' . $mdFile;
-	}
-
-	return [$pathClean, $mdFile];
-}
-
-// MODIFIED - Replace with this:
 function getFileInfos($file)
 {
 	global $rootDir;
