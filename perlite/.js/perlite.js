@@ -1095,13 +1095,13 @@ function hideTooltip() {
 // on document ready stuff
 $(document).ready(function () {
 
+    /*  PDF – always open in a new tab  */
+    $(document).on('click', 'a.internal-link[href$=".pdf"]', function (e) {
+        e.preventDefault();
+        window.open(this.href, '_blank');
+    });
 
 
-// open PDF links in a new tab
-$(document).on('click', 'a.internal-link[href$=".pdf"]', function (e) {
-  e.preventDefault();
-  window.open(this.href, '_blank');
-});
 
 
 
