@@ -119,10 +119,19 @@ function getContent(str, home = false, popHover = false, anchor = "") {
     // CHECK IF IT'S A PDF FILE
     var decodedStr = decodeURIComponent(str);
     if (decodedStr.toLowerCase().endsWith('.pdf')) {
-      // Handle PDF files - open in new tab
-      var pdfPath = uriPath + decodedStr.substring(1); // Remove leading slash and add uriPath
-      window.open(pdfPath, '_blank');
-      return;
+        // Handle PDF files - open in new tab
+        var vaultName = $("p.vault").text(); // Get the vault name (e.g., "Notes")
+        var filePath = decodedStr.startsWith('/') ? decodedStr.substring(1) : decodedStr; // Get the path without the leading slash
+    
+        // Check if the vault name is already in the path to prevent duplication
+        if (filePath.startsWith(vaultName + '/')) {
+             var pdfPath = uriPath + filePath;
+        } else {
+             var pdfPath = uriPath + vaultName + '/' + filePath;
+        }
+    
+        window.open(pdfPath, '_blank');
+        return;
     }
    
     requestPath = uriPath + "content.php?mdfile=" + str;
