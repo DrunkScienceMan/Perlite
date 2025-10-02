@@ -116,6 +116,15 @@ function getContent(str, home = false, popHover = false, anchor = "") {
     return;
   } else {
 
+    // CHECK IF IT'S A PDF FILE
+    var decodedStr = decodeURIComponent(str);
+    if (decodedStr.toLowerCase().endsWith('.pdf')) {
+      // Handle PDF files - open in new tab
+      var pdfPath = uriPath + decodedStr.substring(1); // Remove leading slash and add uriPath
+      window.open(pdfPath, '_blank');
+      return;
+    }
+   
     requestPath = uriPath + "content.php?mdfile=" + str;
 
     if (home) {
