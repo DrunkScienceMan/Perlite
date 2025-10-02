@@ -381,9 +381,7 @@ function getFileInfos($file)
 	// Remove extension for both .md and .pdf files
 	if (strcmp(substr($mdFile, -3), ".md") === 0) {
 		$mdFile = substr($mdFile, 0, -3);
-	} elseif (strcmp(substr($mdFile, -4), ".pdf") === 0) {
-		$mdFile = substr($mdFile, 0, -4);
-	}
+	
 
 	$folderClean = str_replace('$' . $rootDir, '', '$' . pathinfo($file)["dirname"]);
 
