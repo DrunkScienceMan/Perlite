@@ -382,7 +382,16 @@ function getContent($requestFile)
 		$cleanFile = $requestFile;
 		$n = strrpos($requestFile, "/");
 		$path = substr($requestFile, 0, $n);
-		$content .= file_get_contents($rootDir . $requestFile . '.md', true);
+		
+		// Check if it's a PDF file - don't add .md extension
+		if (substr($requestFile, -4) === '.pdf') {
+			// For PDFs, we don't read content (JavaScript will handle opening them)
+			// Just return empty so PHP doesn't error
+			return '';
+		} else {
+			// For markdown files, add .md extension
+			$content .= file_get_contents($rootDir . $requestFile . '.md', true);
+		}
 	}
 
 	return $content;
