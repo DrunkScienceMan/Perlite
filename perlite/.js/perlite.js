@@ -1096,6 +1096,19 @@ function hideTooltip() {
 $(document).ready(function () {
 
 
+
+// open PDF links in a new tab
+$(document).on('click', 'a.internal-link[href$=".pdf"]', function (e) {
+  e.preventDefault();
+  window.open(this.href, '_blank');
+});
+
+
+
+
+
+ 
+
   // load settings from storage
   // ----------------------------------------
 
