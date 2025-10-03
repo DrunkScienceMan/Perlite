@@ -378,7 +378,7 @@ function getFileInfos($file)
 	global $rootDir;
 	$mdFile = mb_basename($file);
 	
-	// Remove extension for both .md and .pdf files
+	// Remove extension for .md
 	if (strcmp(substr($mdFile, -3), ".md") === 0) {
 		$mdFile = substr($mdFile, 0, -3);
 	} 
