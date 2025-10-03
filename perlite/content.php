@@ -371,32 +371,29 @@ function translateLink($pattern, $content, $path, $sameFolder)
 // read content from file
 function getContent($requestFile)
 {
-	global $avFiles;
-	global $path;
-	global $cleanFile;
-	global $rootDir;
-	$content = '';
+    global $avFiles;
+    global $path;
+    global $cleanFile;
+    global $rootDir;
+    $content = '';
 
-	// check if file is in array
-	if (in_array($requestFile, $avFiles, true)) {
-		$cleanFile = $requestFile;
-		$n = strrpos($requestFile, "/");
-		$path = substr($requestFile, 0, $n);
-		
-		// Check if it's a PDF or Excalidraw file - don't add .md extension
-		if (substr($requestFile, -4) === '.pdf') {
-			// For PDFs, we don't read content (JavaScript will handle opening them)
-			return '';
-		} elseif (substr($requestFile, -11) === '.excalidraw') {
-			// For Excalidraw files, we don't read content (JavaScript will handle opening them)
-			return '';
-		} else {
-			// For markdown files, add .md extension
-			$content .= file_get_contents($rootDir . $requestFile . '.md', true);
-		}
-	}
+    // check if file is in array
+    if (in_array($requestFile, $avFiles, true)) {
+        $cleanFile = $requestFile;
+        $n = strrpos($requestFile, "/");
+        $path = substr($requestFile, 0, $n);
+        
+        // Check if it's a PDF or Excalidraw file - don't add .md extension
+        if (substr($requestFile, -4) === '.pdf' || substr($requestFile, -11) === '.excalidraw') {
+            // For PDFs and Excalidraw files, we don't read content (JavaScript will handle opening them)
+            return '';
+        } else {
+            // For markdown files, add .md extension
+            $content .= file_get_contents($rootDir . $requestFile . '.md', true);
+        }
+    }
 
-	return $content;
-}
+    return $content;
+}}
 
 ?>
