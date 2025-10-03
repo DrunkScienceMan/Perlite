@@ -383,10 +383,12 @@ function getContent($requestFile)
 		$n = strrpos($requestFile, "/");
 		$path = substr($requestFile, 0, $n);
 		
-		// Check if it's a PDF file - don't add .md extension
+		// Check if it's a PDF or Excalidraw file - don't add .md extension
 		if (substr($requestFile, -4) === '.pdf') {
 			// For PDFs, we don't read content (JavaScript will handle opening them)
-			// Just return empty so PHP doesn't error
+			return '';
+		} elseif (substr($requestFile, -11) === '.excalidraw') {
+			// For Excalidraw files, we don't read content (JavaScript will handle opening them)
 			return '';
 		} else {
 			// For markdown files, add .md extension
