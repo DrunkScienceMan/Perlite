@@ -136,25 +136,22 @@ function getContent(str, home = false, popHover = false, anchor = "") {
 
     // Add this in the getContent function, after the PDF check:
     
+
     // CHECK IF IT'S AN EXCALIDRAW FILE
     var decodedStr = decodeURIComponent(str);
     if (decodedStr.toLowerCase().endsWith('.excalidraw')) {
         var vaultName = $("p.vault").text();
         var filePath = decodedStr.startsWith('/') ? decodedStr.substring(1) : decodedStr;
         
-        // Construct the full path to the .excalidraw file
+        // Construct the full absolute URL to the .excalidraw file
         if (filePath.startsWith(vaultName + '/')) {
-            var excalidrawPath = uriPath + filePath;
+            var excalidrawPath = window.location.origin + uriPath + filePath;
         } else {
-            var excalidrawPath = uriPath + vaultName + '/' + filePath;
+            var excalidrawPath = window.location.origin + uriPath + vaultName + '/' + filePath;
         }
         
-        // Replace with your self-hosted Excalidraw URL
-        var excalidrawBaseUrl = '/excalidraw/'; // or 'https://excalidraw.yourdomain.com/'
-        
-        // Pass the file URL as a parameter
-        // Your Excalidraw instance will fetch and load it
-        window.open(excalidrawBaseUrl + '?url=' + encodeURIComponent(excalidrawPath), '_blank');
+        // Use the loader page
+        window.open('/excalidraw-loader.html?url=' + encodeURIComponent(excalidrawPath), '_blank');
         
         return;
     }
