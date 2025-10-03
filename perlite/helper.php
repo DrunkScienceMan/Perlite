@@ -364,7 +364,7 @@ function isMDFile($file)
 
 	if (isset($fileinfo['extension'])) {
 		$ext = strtolower($fileinfo['extension']);
-		if ($ext == 'md' || $ext == 'pdf') {
+		if ($ext == 'md' || $ext == 'pdf' || $ext == 'excalidraw') {
 			return true;
 		}
 	}
