@@ -144,10 +144,11 @@ function getContent(str, home = false, popHover = false, anchor = "") {
         var filePath = decodedStr.startsWith('/') ? decodedStr.substring(1) : decodedStr;
         
         // Construct the full path to the .excalidraw file
+        // Don't append .excalidraw again since it's already in the filename
         if (filePath.startsWith(vaultName + '/')) {
-            var excalidrawPath = uriPath + filePath + '.excalidraw';
+            var excalidrawPath = uriPath + filePath;
         } else {
-            var excalidrawPath = uriPath + vaultName + '/' + filePath + '.excalidraw';
+            var excalidrawPath = uriPath + vaultName + '/' + filePath;
         }
         
         // Fetch the file content and open in Excalidraw
