@@ -394,6 +394,6 @@ function getContent($requestFile)
     }
 
     return $content;
-}}
+}
 
 ?>
