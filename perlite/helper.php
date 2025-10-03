@@ -360,22 +360,21 @@ function search($dir, $searchfor, $folder = '')
 
 function isMDFile($file)
 {
-	$fileinfo = pathinfo($file);
+    $fileinfo = pathinfo($file);
 
-	if (isset($fileinfo['extension'])) {
-		$ext = strtolower($fileinfo['extension']);
-		// Check for both .excalidraw and .excalidraw as part of filename
-		if ($ext == 'md' || $ext == 'pdf' || $ext == 'excalidraw') {
-			return true;
-		}
-	}
-	
-	// Also check if filename ends with .excalidraw (for files like "drawing.excalidraw")
-	if (preg_match('/\.excalidraw$/i', $file)) {
-		return true;
-	}
+    if (isset($fileinfo['extension'])) {
+        $ext = strtolower($fileinfo['extension']);
+        if ($ext == 'md' || $ext == 'pdf') {
+            return true;
+        }
+    }
+    
+    // Check for .excalidraw files (they don't have a traditional extension)
+    if (preg_match('/\.excalidraw$/i', $file)) {
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 
