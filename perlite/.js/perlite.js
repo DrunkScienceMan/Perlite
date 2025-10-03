@@ -139,31 +139,23 @@ function getContent(str, home = false, popHover = false, anchor = "") {
     // CHECK IF IT'S AN EXCALIDRAW FILE
     var decodedStr = decodeURIComponent(str);
     if (decodedStr.toLowerCase().endsWith('.excalidraw')) {
-        // Handle Excalidraw files - open in excalidraw.com
         var vaultName = $("p.vault").text();
         var filePath = decodedStr.startsWith('/') ? decodedStr.substring(1) : decodedStr;
         
         // Construct the full path to the .excalidraw file
-        // Don't append .excalidraw again since it's already in the filename
         if (filePath.startsWith(vaultName + '/')) {
             var excalidrawPath = uriPath + filePath;
         } else {
             var excalidrawPath = uriPath + vaultName + '/' + filePath;
         }
         
-        // Fetch the file content and open in Excalidraw
-        fetch(excalidrawPath)
-            .then(response => response.text())
-            .then(data => {
-                // Encode the JSON data for URL
-                var encodedData = encodeURIComponent(data);
-                // Open Excalidraw with the drawing data
-                window.open('https://excalidraw.com/#json=' + encodedData, '_blank');
-            })
-            .catch(error => {
-                console.error('Error loading Excalidraw file:', error);
-                alert('Error loading Excalidraw file: ' + error.message);
-            });
+        // Replace with your self-hosted Excalidraw URL
+        var excalidrawBaseUrl = '/excalidraw/'; // or 'https://excalidraw.yourdomain.com/'
+        
+        // Pass the file URL as a parameter
+        // Your Excalidraw instance will fetch and load it
+        window.open(excalidrawBaseUrl + '?url=' + encodeURIComponent(excalidrawPath), '_blank');
+        
         return;
     }
 
