@@ -133,6 +133,43 @@ function getContent(str, home = false, popHover = false, anchor = "") {
         window.open(pdfPath, '_blank');
         return;
     }
+
+    // Add this in the getContent function, after the PDF check:
+    
+    // CHECK IF IT'S AN EXCALIDRAW FILE
+    var decodedStr = decodeURIComponent(str);
+    if (decodedStr.toLowerCase().endsWith('.excalidraw')) {
+        // Handle Excalidraw files - open in excalidraw.com
+        var vaultName = $("p.vault").text();
+        var filePath = decodedStr.startsWith('/') ? decodedStr.substring(1) : decodedStr;
+        
+        // Construct the full path to the .excalidraw file
+        if (filePath.startsWith(vaultName + '/')) {
+            var excalidrawPath = uriPath + filePath + '.excalidraw';
+        } else {
+            var excalidrawPath = uriPath + vaultName + '/' + filePath + '.excalidraw';
+        }
+        
+        // Fetch the file content and open in Excalidraw
+        fetch(excalidrawPath)
+            .then(response => response.text())
+            .then(data => {
+                // Encode the JSON data for URL
+                var encodedData = encodeURIComponent(data);
+                // Open Excalidraw with the drawing data
+                window.open('https://excalidraw.com/#json=' + encodedData, '_blank');
+            })
+            .catch(error => {
+                console.error('Error loading Excalidraw file:', error);
+                alert('Error loading Excalidraw file: ' + error.message);
+            });
+        return;
+    }
+
+
+
+
+
    
     requestPath = uriPath + "content.php?mdfile=" + str;
 
