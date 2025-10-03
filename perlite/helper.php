@@ -380,24 +380,25 @@ function isMDFile($file)
 
 function getFileInfos($file)
 {
-	global $rootDir;
-	$mdFile = mb_basename($file);
-	
-	// Remove extension for .md
-	if (strcmp(substr($mdFile, -3), ".md") === 0) {
-		$mdFile = substr($mdFile, 0, -3);
-	} 
+    global $rootDir;
+    $mdFile = mb_basename($file);
+    
+    // Remove extension for .md files only
+    if (strcmp(substr($mdFile, -3), ".md") === 0) {
+        $mdFile = substr($mdFile, 0, -3);
+    }
+    // Don't remove .excalidraw extension - keep it as part of the filename
 
-	$folderClean = str_replace('$' . $rootDir, '', '$' . pathinfo($file)["dirname"]);
+    $folderClean = str_replace('$' . $rootDir, '', '$' . pathinfo($file)["dirname"]);
 
-	$folderClean = substr($folderClean, 1);
-	if (!strcmp($folderClean, '')) {
-		$pathClean = $mdFile;
-	} else {
-		$pathClean = $folderClean . '/' . $mdFile;
-	}
+    $folderClean = substr($folderClean, 1);
+    if (!strcmp($folderClean, '')) {
+        $pathClean = $mdFile;
+    } else {
+        $pathClean = $folderClean . '/' . $mdFile;
+    }
 
-	return [$pathClean, $mdFile];
+    return [$pathClean, $mdFile];
 }
 
 function mb_basename($path)
